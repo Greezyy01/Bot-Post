@@ -7,6 +7,7 @@ from typing import Optional
 
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 
 from commands import CommandRegistrar
 from config import ConfigManager
@@ -174,6 +175,7 @@ class AutoPostBot(commands.Bot):
 
 
 async def main() -> None:
+    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
     bot = AutoPostBot()
     token = bot.config.get_token()
     if not token:
