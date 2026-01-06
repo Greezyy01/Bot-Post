@@ -15,14 +15,24 @@ class DashboardView(discord.ui.View):
         embed = await self.bot.build_dashboard_embed(interaction.guild_id)
         await interaction.response.edit_message(embed=embed, view=self)
 
-    @discord.ui.button(label="START ALL", style=discord.ButtonStyle.success, emoji="▶️")
+    @discord.ui.button(
+        label="START ALL",
+        style=discord.ButtonStyle.success,
+        emoji="▶️",
+        custom_id="dashboard:start_all",
+    )
     async def start_all(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
         await self.bot.scheduler.start_all()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="PAUSE ALL", style=discord.ButtonStyle.secondary, emoji="⏸️")
+    @discord.ui.button(
+        label="PAUSE ALL",
+        style=discord.ButtonStyle.secondary,
+        emoji="⏸️",
+        custom_id="dashboard:pause_all",
+    )
     async def pause_all(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -30,14 +40,24 @@ class DashboardView(discord.ui.View):
             await self.bot.scheduler.pause_guild(interaction.guild_id)
         await self._refresh(interaction)
 
-    @discord.ui.button(label="STOP ALL", style=discord.ButtonStyle.danger, emoji="⏹️")
+    @discord.ui.button(
+        label="STOP ALL",
+        style=discord.ButtonStyle.danger,
+        emoji="⏹️",
+        custom_id="dashboard:stop_all",
+    )
     async def stop_all(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
         await self.bot.scheduler.stop_all()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="STATS", style=discord.ButtonStyle.primary, emoji="📊")
+    @discord.ui.button(
+        label="STATS",
+        style=discord.ButtonStyle.primary,
+        emoji="📊",
+        custom_id="dashboard:stats",
+    )
     async def stats(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -45,20 +65,35 @@ class DashboardView(discord.ui.View):
         embed = self.bot.build_stats_embed(snapshot)
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    @discord.ui.button(label="SETTINGS", style=discord.ButtonStyle.secondary, emoji="⚙️")
+    @discord.ui.button(
+        label="SETTINGS",
+        style=discord.ButtonStyle.secondary,
+        emoji="⚙️",
+        custom_id="dashboard:settings",
+    )
     async def settings(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
         embed = await self.bot.build_config_embed(interaction.guild_id)
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    @discord.ui.button(label="REFRESH", style=discord.ButtonStyle.secondary, emoji="🔄")
+    @discord.ui.button(
+        label="REFRESH",
+        style=discord.ButtonStyle.secondary,
+        emoji="🔄",
+        custom_id="dashboard:refresh",
+    )
     async def refresh(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
         await self._refresh(interaction)
 
-    @discord.ui.button(label="ADD CHANNEL", style=discord.ButtonStyle.success, emoji="➕")
+    @discord.ui.button(
+        label="ADD CHANNEL",
+        style=discord.ButtonStyle.success,
+        emoji="➕",
+        custom_id="dashboard:add_channel",
+    )
     async def add_channel(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -66,7 +101,12 @@ class DashboardView(discord.ui.View):
             "Gunakan `/quickadd` untuk menambah channel.", ephemeral=True
         )
 
-    @discord.ui.button(label="EDIT ALL", style=discord.ButtonStyle.secondary, emoji="✏️")
+    @discord.ui.button(
+        label="EDIT ALL",
+        style=discord.ButtonStyle.secondary,
+        emoji="✏️",
+        custom_id="dashboard:edit_all",
+    )
     async def edit_all(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -74,7 +114,12 @@ class DashboardView(discord.ui.View):
             "Gunakan `/config` untuk melihat pengaturan.", ephemeral=True
         )
 
-    @discord.ui.button(label="REMOVE ALL", style=discord.ButtonStyle.danger, emoji="🗑️")
+    @discord.ui.button(
+        label="REMOVE ALL",
+        style=discord.ButtonStyle.danger,
+        emoji="🗑️",
+        custom_id="dashboard:remove_all",
+    )
     async def remove_all(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -84,7 +129,12 @@ class DashboardView(discord.ui.View):
             "Semua channel dihapus dari konfigurasi.", ephemeral=True
         )
 
-    @discord.ui.button(label="LIST CHANNELS", style=discord.ButtonStyle.primary, emoji="📋")
+    @discord.ui.button(
+        label="LIST CHANNELS",
+        style=discord.ButtonStyle.primary,
+        emoji="📋",
+        custom_id="dashboard:list_channels",
+    )
     async def list_channels(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -98,7 +148,12 @@ class DashboardView(discord.ui.View):
         content = "\n".join(lines) if lines else "Belum ada channel."
         await interaction.response.send_message(content, ephemeral=True)
 
-    @discord.ui.button(label="EXPORT", style=discord.ButtonStyle.secondary, emoji="📁")
+    @discord.ui.button(
+        label="EXPORT",
+        style=discord.ButtonStyle.secondary,
+        emoji="📁",
+        custom_id="dashboard:export",
+    )
     async def export_config(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -107,7 +162,12 @@ class DashboardView(discord.ui.View):
             f"Backup dibuat: `{backup}`", ephemeral=True
         )
 
-    @discord.ui.button(label="IMPORT", style=discord.ButtonStyle.secondary, emoji="📤")
+    @discord.ui.button(
+        label="IMPORT",
+        style=discord.ButtonStyle.secondary,
+        emoji="📤",
+        custom_id="dashboard:import",
+    )
     async def import_config(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -116,7 +176,12 @@ class DashboardView(discord.ui.View):
             ephemeral=True,
         )
 
-    @discord.ui.button(label="REAL-TIME LOGS", style=discord.ButtonStyle.primary, emoji="📈")
+    @discord.ui.button(
+        label="REAL-TIME LOGS",
+        style=discord.ButtonStyle.primary,
+        emoji="📈",
+        custom_id="dashboard:logs",
+    )
     async def logs(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -124,7 +189,12 @@ class DashboardView(discord.ui.View):
             "Logs realtime tersedia di file logs/.", ephemeral=True
         )
 
-    @discord.ui.button(label="ALERTS", style=discord.ButtonStyle.secondary, emoji="🔔")
+    @discord.ui.button(
+        label="ALERTS",
+        style=discord.ButtonStyle.secondary,
+        emoji="🔔",
+        custom_id="dashboard:alerts",
+    )
     async def alerts(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -132,7 +202,12 @@ class DashboardView(discord.ui.View):
             "Alerts akan dikirim via webhook jika diatur.", ephemeral=True
         )
 
-    @discord.ui.button(label="TOGGLE WEBHOOK", style=discord.ButtonStyle.secondary, emoji="🎛️")
+    @discord.ui.button(
+        label="TOGGLE WEBHOOK",
+        style=discord.ButtonStyle.secondary,
+        emoji="🎛️",
+        custom_id="dashboard:toggle_webhook",
+    )
     async def toggle_webhook(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -140,7 +215,12 @@ class DashboardView(discord.ui.View):
             "Gunakan `/setup` untuk mengubah webhook.", ephemeral=True
         )
 
-    @discord.ui.button(label="RUNTIME", style=discord.ButtonStyle.secondary, emoji="🕐")
+    @discord.ui.button(
+        label="RUNTIME",
+        style=discord.ButtonStyle.secondary,
+        emoji="🕐",
+        custom_id="dashboard:runtime",
+    )
     async def runtime(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -149,7 +229,12 @@ class DashboardView(discord.ui.View):
             f"Runtime bot: {uptime}", ephemeral=True
         )
 
-    @discord.ui.button(label="PERFORMANCE", style=discord.ButtonStyle.secondary, emoji="📉")
+    @discord.ui.button(
+        label="PERFORMANCE",
+        style=discord.ButtonStyle.secondary,
+        emoji="📉",
+        custom_id="dashboard:performance",
+    )
     async def performance(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:
@@ -158,7 +243,12 @@ class DashboardView(discord.ui.View):
             f"Avg post time: {snapshot.avg_post_time:.2f}s", ephemeral=True
         )
 
-    @discord.ui.button(label="LOG FILE", style=discord.ButtonStyle.secondary, emoji="📄")
+    @discord.ui.button(
+        label="LOG FILE",
+        style=discord.ButtonStyle.secondary,
+        emoji="📄",
+        custom_id="dashboard:log_file",
+    )
     async def log_file(
         self, interaction: discord.Interaction, _: discord.ui.Button
     ) -> None:

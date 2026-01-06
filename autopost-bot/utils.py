@@ -2,6 +2,7 @@ import asyncio
 import base64
 import datetime as dt
 import logging
+from pathlib import Path
 import random
 from typing import Any, Dict, Optional
 
@@ -19,9 +20,11 @@ def setup_logger(name: str, log_file: str) -> logging.Logger:
     if logger.handlers:
         return logger
 
+    log_path = Path(log_file)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
     console = logging.StreamHandler()
     console.setFormatter(logging.Formatter(LOG_FORMAT))
-    file_handler = logging.FileHandler(log_file)
+    file_handler = logging.FileHandler(log_path)
     file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
     logger.addHandler(console)
     logger.addHandler(file_handler)
